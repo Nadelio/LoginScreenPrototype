@@ -143,7 +143,7 @@ public class LoginFrame extends JFrame
         userNoExistError.setFont(new Font("Arial", Font.PLAIN, 10));
         userNoExistError.setHorizontalAlignment(SwingConstants.CENTER);
 
-        
+
         // Login Successful Screen Configuration-----------------------------------------------------------|
 
         // stuff here
@@ -209,39 +209,18 @@ public class LoginFrame extends JFrame
                 if(!loginsObject.containsKey(tField.getText().strip().toLowerCase()))
                 {
                     userNoExistError.setVisible(true);
-                    try
-                    {
-                        Thread.sleep(2000);
-                        userNoExistError.setVisible(false);
-                    }
-                    catch(InterruptedException e1){}
                 }
                 else if(tField.getText().equals("") || pField.getPassword().equals(""))
                 {
                     emptyFieldError.setVisible(true);
-                    try
-                    {
-                        Thread.sleep(2000);
-                        emptyFieldError.setVisible(false);
-                    }
-                    catch(InterruptedException e1){}
                 }
                 else if(!loginsObject.get(tField.getText().strip().toLowerCase()).equals(pField.getPassword()))
                 {
                     wrongPasswordError.setVisible(true);
-                    try
-                    {
-                        Thread.sleep(2000);
-                        wrongPasswordError.setVisible(false);
-                    }
-                    catch(InterruptedException e1){}
                 }
                 else
                 {
-                    tField.setVisible(false);
-                    pField.setVisible(false);
-                    registerButton.setVisible(false);
-                    loginButton.setVisible(false);
+                    mainScreen(false);
                     loginSuccessful.setVisible(true);
                 }
             }
