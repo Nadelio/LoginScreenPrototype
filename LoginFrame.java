@@ -1,6 +1,9 @@
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -11,14 +14,16 @@ public class LoginFrame extends JFrame
     public LoginFrame()
     {
         // create components
-        JTextField tField = new JTextField();
+        JTextField tField = new JTextField("Username");
+        JPasswordField pField = new JPasswordField("Password");
         JButton registerButton = new JButton("Register");
         JButton loginButton = new JButton("Login");
 
         // set bounds of components
-        tField.setBounds(660, 400, 200,100);
-        registerButton.setBounds(360, 650, 300, 100);
-        loginButton.setBounds(960, 650, 300, 100);
+        tField.setBounds(660, 200, 200,100);
+        pField.setBounds(660, 350, 200, 100);
+        registerButton.setBounds(360, 550, 300, 100);
+        loginButton.setBounds(860, 550, 300, 100);
 
         // set layout of frame to null
         setLayout(null);
@@ -26,7 +31,15 @@ public class LoginFrame extends JFrame
         // configure tField settings
         tField.setForeground(Color.GRAY);
         tField.setBackground(Color.DARK_GRAY);
-        tField.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        tField.setFont(new Font("Arial", Font.PLAIN, 25));
+        tField.setHorizontalAlignment(SwingConstants.CENTER);
+
+        // configure pField settings
+        pField.setForeground(Color.GRAY);
+        pField.setBackground(Color.DARK_GRAY);
+        pField.setFont(new Font("Arial", Font.PLAIN, 25));
+        pField.setHorizontalAlignment(SwingConstants.CENTER);
+        pField.setEchoChar((char) 0);
 
         // configure registerButton settings
         registerButton.setFont(new Font("Arial", Font.PLAIN, 45));
@@ -50,8 +63,11 @@ public class LoginFrame extends JFrame
 
         // add components
         add(tField);
+        add(pField);
         add(registerButton);
         add(loginButton);
+
+        // setup action listeners for both tField and pField that remove/replace the text when they are focused/unfocused
 
         // setup an action listener to registerButton
         registerButton.addActionListener(new ActionListener() {
