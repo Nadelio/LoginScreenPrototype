@@ -13,7 +13,6 @@ public class Main
         }
         // initialize JFrame and login stuff
         loginFrame = new LoginFrame();
-        loginFrame.onStart();
     }
 
     public static LoginFrame getLoginFrame(){return loginFrame;}

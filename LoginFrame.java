@@ -179,6 +179,10 @@ public class LoginFrame extends JFrame
         // Login Successful Screen Components
         add(loginSuccessful);
 
+        
+        // set to first screen
+        onStart();
+
 
         // setup action listeners for both tField and pField that remove/replace the text when they are focused/unfocused
 
