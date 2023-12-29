@@ -212,12 +212,12 @@ public class LoginFrame extends JFrame
             public void actionPerformed(ActionEvent e)
             {
                 String password = new String(pField.getPassword());
-                if(!existingUserCheck(tField.getText().strip().toLowerCase()))
+                if(!existingUserCheck(tField.getText().strip().toLowerCase())) //! issue here
                 {
                     userNoExistError.setVisible(true);
                     System.out.println("userNoExistError");
                 }
-                else if(tField.getText().equals("Username") || pField.getPassword().toString().equals("Password"))
+                else if(tField.getText().equals("") || pField.getPassword().toString().equals("")) //TODO: Don't forget to add the placeholder text stuff
                 {
                     emptyFieldError.setVisible(true);
                     System.out.println("emptyFieldError");
@@ -257,7 +257,7 @@ public class LoginFrame extends JFrame
     }
 
     // checks if there is an existing user in logins.json
-    public static boolean existingUserCheck(String username)
+    public static boolean existingUserCheck(String username) //! issue here
     {
         JSONParser jsonParser = new JSONParser();
         try
@@ -303,7 +303,7 @@ public class LoginFrame extends JFrame
         return false;
     }
 
-    public static JSONObject getLoginData() throws ParseException
+    public static JSONObject getLoginData() throws ParseException //! issue here
     {
         JSONParser jsonParser = new JSONParser();
         Object obj = jsonParser.parse("./logins.json");
@@ -311,7 +311,7 @@ public class LoginFrame extends JFrame
     }
     
     // writes login info to logins.json
-    public static void writeToLogins(String JSONString) throws IOException, ParseException
+    public static void writeToLogins(String JSONString) throws IOException, ParseException //! issue here
     {
         String loginData = getLoginData().toJSONString();
         FileWriter fWrite = new FileWriter("./logins.json");
