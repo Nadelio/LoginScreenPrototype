@@ -206,11 +206,11 @@ public class LoginFrame extends JFrame
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                if(!loginsObject.containsKey(tField.getText().strip().toLowerCase()))
+                if(!loginsObject.containsKey(tField.getText().strip().toLowerCase())) //TODO: change to check file, maybe have a readLine JSONObject?
                 {
                     userNoExistError.setVisible(true);
                 }
-                else if(tField.getText().equals("") || pField.getPassword().equals(""))
+                else if(tField.getText().equals("Username") || pField.getPassword().equals("Password"))
                 {
                     emptyFieldError.setVisible(true);
                 }
