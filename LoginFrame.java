@@ -1,23 +1,45 @@
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-
+import org.json.simple.JSONObject;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class LoginFrame extends JFrame
 {
-    public LoginFrame()
+    private JSONObject loginsObject = new JSONObject();
+
+    public LoginFrame() throws IOException
     {
+        // setup loginsObject
+        loginsObject.put("Username", "Password");
+
+
         // create components
+
+        // Main Screen Components
         JTextField tField = new JTextField("Username");
         JPasswordField pField = new JPasswordField("Password");
         JButton registerButton = new JButton("Register");
         JButton loginButton = new JButton("Login");
+        // Register Screen Components
+        JTextField registerTField = new JTextField("Register Username");
+        JPasswordField registerPField = new JPasswordField("Register Password");
+        JButton confirmRegistrationButton = new JButton("Confirm Registration");
+        // Error Boxes
+        JLabel emptyFieldError = new JLabel("Please fill in all boxes!");
+        JLabel userExistsError = new JLabel("This username already exists! Please login!");
+        JLabel wrongPasswordError = new JLabel("Password is incorrect!");
+        JLabel userNoExistError = new JLabel("User doesn't exist");
+        // Login Screen Components
+        JLabel loginSuccessful = new JLabel("Login Successful!");
 
         // set bounds of components
         tField.setBounds(660, 200, 200,100);
@@ -70,23 +92,81 @@ public class LoginFrame extends JFrame
         // setup action listeners for both tField and pField that remove/replace the text when they are focused/unfocused
 
         // setup an action listener to registerButton
-        registerButton.addActionListener(new ActionListener() {
+        registerButton.addActionListener(new ActionListener()
+        {
             @Override
             public void actionPerformed(ActionEvent e)
             {
                 tField.setVisible(false);
+                pField.setVisible(false);
                 registerButton.setVisible(false);
                 loginButton.setVisible(false);
-                //registerTField.setVisible(true);
-                //confirmRegistrationButton.setVisible(true);
-                //TODO: add the login info into logins.json 
+                registerTField.setVisible(true);
+                registerPField.setVisible(true);
+                confirmRegistrationButton.setVisible(true);
+
+                // on confirm registration:
+                // loginsObject.put(registerTField.getText(), registerPField.getPassword());
+                // try{writeToLogins(loginsObject.toJSONString());}catch(IOException e1){}
             }
         });
 
-        // setup an action listener to loginButton
-        // check if the username in tField is present in logins.json
-        // if not, show the error (in a JLabel)
-        // if so, show the login successful screen
+        //TODO: Setup register screen component listeners
 
-    }    
+        // setup action listener to loginButton
+        loginButton.addActionListener(new ActionListener()
+        {
+            
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                if(!loginsObject.containsKey(tField.getText().strip().toLowerCase()))
+                {
+                    userNoExistError.setVisible(true);
+                    try
+                    {
+                        Thread.sleep(2000);
+                        userNoExistError.setVisible(false);
+                    }
+                    catch(InterruptedException e1){}
+                }
+                else if(tField.getText().equals("") || pField.getPassword().equals(""))
+                {
+                    emptyFieldError.setVisible(true);try
+                    {
+                        Thread.sleep(2000);
+                        emptyFieldError.setVisible(false);
+                    }
+                    catch(InterruptedException e1){}
+                }
+                else if(!loginsObject.get(tField.getText().strip().toLowerCase()).equals(pField.getPassword()))
+                {
+                    wrongPasswordError.setVisible(true);
+                    try
+                    {
+                        Thread.sleep(2000);
+                        wrongPasswordError.setVisible(false);
+                    }
+                    catch(InterruptedException e1){}
+                }
+                else
+                {
+                    tField.setVisible(false);
+                    pField.setVisible(false);
+                    registerButton.setVisible(false);
+                    loginButton.setVisible(false);
+                    loginSuccessful.setVisible(true);
+                }
+            }
+        });
+
+    }  
+    
+    // writes login info to logins.json
+    public static void writeToLogins(String JSONString) throws IOException
+    {
+        FileWriter fWrite = new FileWriter("./logins.json");
+        fWrite.write(JSONString);
+        fWrite.close();
+    }
 }
