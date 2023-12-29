@@ -16,33 +16,33 @@ public class LoginFrame extends JFrame
 {
     private JSONObject loginsObject = new JSONObject();
 
+    // create components-------------------------------------------------------------------------------|
+
+    // Main Screen Components
+    public JTextField tField = new JTextField("Username");
+    public JPasswordField pField = new JPasswordField("Password");
+    public JButton registerButton = new JButton("Register");
+    public JButton loginButton = new JButton("Login");
+    // Register Screen Components
+    public JTextField registerTField = new JTextField("Register Username");
+    public JPasswordField registerPField = new JPasswordField("Register Password");
+    public JButton confirmRegistrationButton = new JButton("Confirm Registration");
+    // Error Boxes
+    public JLabel emptyFieldError = new JLabel("Please fill in all boxes!");
+    public JLabel userExistsError = new JLabel("This username already exists! Please login!");
+    public JLabel wrongPasswordError = new JLabel("Password is incorrect!");
+    public JLabel userNoExistError = new JLabel("User doesn't exist");
+    // Login Screen Components
+    public JLabel loginSuccessful = new JLabel("Login Successful!");
+
+    // create components-------------------------------------------------------------------------------|
+
     public LoginFrame() throws IOException
     {
         // setup loginsObject
         loginsObject.put("Username", "Password");
 
 
-        // create components-------------------------------------------------------------------------------|
-
-        // Main Screen Components
-        JTextField tField = new JTextField("Username");
-        JPasswordField pField = new JPasswordField("Password");
-        JButton registerButton = new JButton("Register");
-        JButton loginButton = new JButton("Login");
-        // Register Screen Components
-        JTextField registerTField = new JTextField("Register Username");
-        JPasswordField registerPField = new JPasswordField("Register Password");
-        JButton confirmRegistrationButton = new JButton("Confirm Registration");
-        // Error Boxes
-        JLabel emptyFieldError = new JLabel("Please fill in all boxes!");
-        JLabel userExistsError = new JLabel("This username already exists! Please login!");
-        JLabel wrongPasswordError = new JLabel("Password is incorrect!");
-        JLabel userNoExistError = new JLabel("User doesn't exist");
-        // Login Screen Components
-        JLabel loginSuccessful = new JLabel("Login Successful!");
-
-        // create components-------------------------------------------------------------------------------|
-//---------------------------------------------------------------------------------------------------------|
         // set bounds of components------------------------------------------------------------------------|
 
         // Main Screen
@@ -51,13 +51,21 @@ public class LoginFrame extends JFrame
         registerButton.setBounds(360, 550, 300, 100);
         loginButton.setBounds(860, 550, 300, 100);
         // Register Screen
+        registerTField.setBounds(660, 200, 200, 100);
+        registerPField.setBounds(660, 350, 200, 100);
+        confirmRegistrationButton.setBounds(660, 500, 200, 100);
         // Errors
+        emptyFieldError.setBounds(660, 500, 200, 50);
+        userExistsError.setBounds(660, 650, 200, 50);
+        wrongPasswordError.setBounds(660, 500, 200, 50);
+        userExistsError.setBounds(660, 500, 200, 50);
         // Login Successful Screen
+        loginSuccessful.setBounds(660, 250, 200, 100);
 
-        // set bounds of components------------------------------------------------------------------------|
 
         // set layout of frame to null
         setLayout(null);
+
 
         // Main Screen Configuration-----------------------------------------------------------------------|
 
@@ -86,25 +94,60 @@ public class LoginFrame extends JFrame
         loginButton.setForeground(Color.GRAY);
         loginButton.setFocusPainted(false);
 
-        // Main Screen Configuration-----------------------------------------------------------------------|
-//---------------------------------------------------------------------------------------------------------|
+
         //Register Screen Configuration--------------------------------------------------------------------|
         
-        // stuff here
+        // configure registerTField settings
+        registerTField.setForeground(Color.GRAY);
+        registerTField.setBackground(Color.DARK_GRAY);
+        registerTField.setFont(new Font("Arial", Font.PLAIN, 25));
+        registerTField.setHorizontalAlignment(SwingConstants.CENTER);
+        
+        // configure registerPField settings
+        registerPField.setForeground(Color.GRAY);
+        registerPField.setBackground(Color.DARK_GRAY);
+        registerPField.setFont(new Font("Arial", Font.PLAIN, 25));
+        registerPField.setHorizontalAlignment(SwingConstants.CENTER);
+        registerPField.setEchoChar((char) 0);
 
-        //Register Screen Configuration--------------------------------------------------------------------|
-//---------------------------------------------------------------------------------------------------------|
+        // configure confirmRegistrationButton settings
+        confirmRegistrationButton.setFont(new Font("Arial", Font.PLAIN, 45));
+        confirmRegistrationButton.setBackground(Color.DARK_GRAY);
+        confirmRegistrationButton.setForeground(Color.GRAY);
+        confirmRegistrationButton.setFocusPainted(false);
+
+        
         // Errors Configuration----------------------------------------------------------------------------|
 
-        // stuff here
+        // configure emptyFieldError settings
+        emptyFieldError.setForeground(Color.GRAY);
+        emptyFieldError.setBackground(Color.DARK_GRAY);
+        emptyFieldError.setFont(new Font("Arial", Font.PLAIN, 10));
+        emptyFieldError.setHorizontalAlignment(SwingConstants.CENTER);
 
-        // Errors Configuration----------------------------------------------------------------------------|
-//---------------------------------------------------------------------------------------------------------|
+        // configure userExistsError settings
+        userExistsError.setForeground(Color.GRAY);
+        userExistsError.setBackground(Color.DARK_GRAY);
+        userExistsError.setFont(new Font("Arial", Font.PLAIN, 10));
+        userExistsError.setHorizontalAlignment(SwingConstants.CENTER);
+
+        // configure wrongPasswordError settings
+        wrongPasswordError.setForeground(Color.GRAY);
+        wrongPasswordError.setBackground(Color.DARK_GRAY);
+        wrongPasswordError.setFont(new Font("Arial", Font.PLAIN, 10));
+        wrongPasswordError.setHorizontalAlignment(SwingConstants.CENTER);
+
+        // configure userNoExistError settings
+        userNoExistError.setForeground(Color.GRAY);
+        userNoExistError.setBackground(Color.DARK_GRAY);
+        userNoExistError.setFont(new Font("Arial", Font.PLAIN, 10));
+        userNoExistError.setHorizontalAlignment(SwingConstants.CENTER);
+
+        
         // Login Successful Screen Configuration-----------------------------------------------------------|
 
         // stuff here
 
-        // Login Successful Screen Configuration-----------------------------------------------------------|
 
         // configure Frame settings
         setSize(1920, 1080);
@@ -114,15 +157,28 @@ public class LoginFrame extends JFrame
         setLocationRelativeTo(null);
         setVisible(true);
 
+
         // add components
         // Main Screen Components
         add(tField);
         add(pField);
         add(registerButton);
         add(loginButton);
+
         // Register Screen Components
+        add(registerTField);
+        add(registerPField);
+        add(confirmRegistrationButton);
+
         // Error Components
+        add(emptyFieldError);
+        add(userExistsError);
+        add(wrongPasswordError);
+        add(userNoExistError);
+
         // Login Successful Screen Components
+        add(loginSuccessful);
+
 
         // setup action listeners for both tField and pField that remove/replace the text when they are focused/unfocused
 
@@ -132,13 +188,8 @@ public class LoginFrame extends JFrame
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                tField.setVisible(false);
-                pField.setVisible(false);
-                registerButton.setVisible(false);
-                loginButton.setVisible(false);
-                registerTField.setVisible(true);
-                registerPField.setVisible(true);
-                confirmRegistrationButton.setVisible(true);
+                mainScreen(false);
+                registerScreen(true);
 
                 // on confirm registration:
                 // loginsObject.put(registerTField.getText(), registerPField.getPassword());
@@ -167,7 +218,8 @@ public class LoginFrame extends JFrame
                 }
                 else if(tField.getText().equals("") || pField.getPassword().equals(""))
                 {
-                    emptyFieldError.setVisible(true);try
+                    emptyFieldError.setVisible(true);
+                    try
                     {
                         Thread.sleep(2000);
                         emptyFieldError.setVisible(false);
@@ -194,7 +246,6 @@ public class LoginFrame extends JFrame
                 }
             }
         });
-
     }  
     
     // writes login info to logins.json
@@ -203,5 +254,39 @@ public class LoginFrame extends JFrame
         FileWriter fWrite = new FileWriter("./logins.json");
         fWrite.write(JSONString);
         fWrite.close();
+    }
+
+    // sets the state of main screen components
+    public void mainScreen(boolean state)
+    {
+        tField.setVisible(state);
+        pField.setVisible(state);
+        registerButton.setVisible(state);
+        loginButton.setVisible(state);
+    }
+
+    // sets the state of register screen components
+    public void registerScreen(boolean state)
+    {
+        registerTField.setVisible(state);
+        registerPField.setVisible(state);
+        confirmRegistrationButton.setVisible(state);
+    }
+
+    // set all errors to invisible
+    public void noErrors()
+    {
+        emptyFieldError.setVisible(false);
+        userExistsError.setVisible(false);
+        wrongPasswordError.setVisible(false);
+        userNoExistError.setVisible(false);
+    }
+
+    public void onStart()
+    {
+        mainScreen(true);
+        registerScreen(false);
+        noErrors();
+        loginSuccessful.setVisible(false);
     }
 }
