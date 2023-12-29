@@ -4,11 +4,18 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -39,10 +46,6 @@ public class LoginFrame extends JFrame
 
     public LoginFrame() throws IOException
     {
-        // setup loginsObject
-        loginsObject.put("Username", "Password");
-
-
         // set bounds of components------------------------------------------------------------------------|
 
         // Main Screen
@@ -159,6 +162,12 @@ public class LoginFrame extends JFrame
 
 
         // add components
+        // Error Components
+        add(emptyFieldError);
+        add(userExistsError);
+        add(wrongPasswordError);
+        add(userNoExistError);
+
         // Main Screen Components
         add(tField);
         add(pField);
@@ -170,16 +179,10 @@ public class LoginFrame extends JFrame
         add(registerPField);
         add(confirmRegistrationButton);
 
-        // Error Components
-        add(emptyFieldError);
-        add(userExistsError);
-        add(wrongPasswordError);
-        add(userNoExistError);
-
         // Login Successful Screen Components
         add(loginSuccessful);
 
-        
+
         // set to first screen
         onStart();
 
@@ -201,26 +204,28 @@ public class LoginFrame extends JFrame
             }
         });
 
-        //TODO: Setup register screen component listeners
 
         // setup action listener to loginButton
         loginButton.addActionListener(new ActionListener()
         {
-            
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                if(!loginsObject.containsKey(tField.getText().strip().toLowerCase())) //TODO: change to check file, maybe have a readLine JSONObject?
+                String password = new String(pField.getPassword());
+                if(!existingUserCheck(tField.getText().strip().toLowerCase()))
                 {
                     userNoExistError.setVisible(true);
+                    System.out.println("userNoExistError");
                 }
-                else if(tField.getText().equals("Username") || pField.getPassword().equals("Password"))
+                else if(tField.getText().equals("Username") || pField.getPassword().toString().equals("Password"))
                 {
                     emptyFieldError.setVisible(true);
+                    System.out.println("emptyFieldError");
                 }
-                else if(!loginsObject.get(tField.getText().strip().toLowerCase()).equals(pField.getPassword()))
+                else if(!passwordCheck(tField.getText().strip().toLowerCase(), password.strip().toLowerCase()))
                 {
                     wrongPasswordError.setVisible(true);
+                    System.out.println("wrongPasswordError");
                 }
                 else
                 {
@@ -229,13 +234,88 @@ public class LoginFrame extends JFrame
                 }
             }
         });
-    }  
+
+        // setup an action listener to confirmRegistrationButton
+        confirmRegistrationButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                if(existingUserCheck(registerTField.getText().strip().toLowerCase()))
+                {
+                    userExistsError.setVisible(true);
+                    System.out.println("userExistsError");
+                }
+                else
+                {
+                    String password = new String(registerPField.getPassword());
+                    loginsObject.put(registerTField.getText().strip().toLowerCase(), password.strip().toLowerCase());
+                    try {writeToLogins(loginsObject.toJSONString());} catch (IOException e1){} catch (ParseException e1){}
+                }
+            }
+        });
+    }
+
+    // checks if there is an existing user in logins.json
+    public static boolean existingUserCheck(String username)
+    {
+        JSONParser jsonParser = new JSONParser();
+        try
+        {
+            Object object  = jsonParser.parse("./logins.json");
+            JSONArray jsonArray = new JSONArray();
+            jsonArray.add(object);
+            for(Object obj : jsonArray)
+            {
+                JSONObject user = (JSONObject) obj;
+                if(user.containsKey(username))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        catch(ParseException e){}
+
+        return false;
+    }
+
+    public static boolean passwordCheck(String username, String password)
+    {
+        JSONParser jsonParser = new JSONParser();
+        try
+        {
+            Object object  = jsonParser.parse("./logins.json");
+            JSONArray jsonArray = new JSONArray();
+            jsonArray.add(object);
+            for(Object obj : jsonArray)
+            {
+                JSONObject user = (JSONObject) obj;
+                if(user.get(username).equals(password))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        catch(ParseException e){}
+
+        return false;
+    }
+
+    public static JSONObject getLoginData() throws ParseException
+    {
+        JSONParser jsonParser = new JSONParser();
+        Object obj = jsonParser.parse("./logins.json");
+        return (JSONObject) obj;
+    }
     
     // writes login info to logins.json
-    public static void writeToLogins(String JSONString) throws IOException
+    public static void writeToLogins(String JSONString) throws IOException, ParseException
     {
+        String loginData = getLoginData().toJSONString();
         FileWriter fWrite = new FileWriter("./logins.json");
-        fWrite.write(JSONString);
+        fWrite.write(loginData + JSONString);
         fWrite.close();
     }
 
