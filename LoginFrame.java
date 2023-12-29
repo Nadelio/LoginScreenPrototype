@@ -22,7 +22,7 @@ public class LoginFrame extends JFrame
         loginsObject.put("Username", "Password");
 
 
-        // create components
+        // create components-------------------------------------------------------------------------------|
 
         // Main Screen Components
         JTextField tField = new JTextField("Username");
@@ -41,14 +41,25 @@ public class LoginFrame extends JFrame
         // Login Screen Components
         JLabel loginSuccessful = new JLabel("Login Successful!");
 
-        // set bounds of components
+        // create components-------------------------------------------------------------------------------|
+//---------------------------------------------------------------------------------------------------------|
+        // set bounds of components------------------------------------------------------------------------|
+
+        // Main Screen
         tField.setBounds(660, 200, 200,100);
         pField.setBounds(660, 350, 200, 100);
         registerButton.setBounds(360, 550, 300, 100);
         loginButton.setBounds(860, 550, 300, 100);
+        // Register Screen
+        // Errors
+        // Login Successful Screen
+
+        // set bounds of components------------------------------------------------------------------------|
 
         // set layout of frame to null
         setLayout(null);
+
+        // Main Screen Configuration-----------------------------------------------------------------------|
 
         // configure tField settings
         tField.setForeground(Color.GRAY);
@@ -75,6 +86,26 @@ public class LoginFrame extends JFrame
         loginButton.setForeground(Color.GRAY);
         loginButton.setFocusPainted(false);
 
+        // Main Screen Configuration-----------------------------------------------------------------------|
+//---------------------------------------------------------------------------------------------------------|
+        //Register Screen Configuration--------------------------------------------------------------------|
+        
+        // stuff here
+
+        //Register Screen Configuration--------------------------------------------------------------------|
+//---------------------------------------------------------------------------------------------------------|
+        // Errors Configuration----------------------------------------------------------------------------|
+
+        // stuff here
+
+        // Errors Configuration----------------------------------------------------------------------------|
+//---------------------------------------------------------------------------------------------------------|
+        // Login Successful Screen Configuration-----------------------------------------------------------|
+
+        // stuff here
+
+        // Login Successful Screen Configuration-----------------------------------------------------------|
+
         // configure Frame settings
         setSize(1920, 1080);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -84,10 +115,14 @@ public class LoginFrame extends JFrame
         setVisible(true);
 
         // add components
+        // Main Screen Components
         add(tField);
         add(pField);
         add(registerButton);
         add(loginButton);
+        // Register Screen Components
+        // Error Components
+        // Login Successful Screen Components
 
         // setup action listeners for both tField and pField that remove/replace the text when they are focused/unfocused
 
