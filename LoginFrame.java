@@ -160,11 +160,7 @@ public class LoginFrame extends JFrame
 
 
         // add components
-        // Error Components
-        add(emptyFieldError);
-        add(userExistsError);
-        add(wrongPasswordError);
-        add(userNoExistError);
+        
 
         // Main Screen Components
         add(tField);
@@ -180,7 +176,13 @@ public class LoginFrame extends JFrame
         // Login Successful Screen Components
         add(loginSuccessful);
 
+        // Error Components
+        add(emptyFieldError);
+        add(userExistsError);
+        add(wrongPasswordError);
+        add(userNoExistError);
 
+        
         // set to first screen
         onStart();
 
