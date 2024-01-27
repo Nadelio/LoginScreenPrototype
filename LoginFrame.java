@@ -250,7 +250,7 @@ public class LoginFrame extends JFrame
                 {
                     String password = new String(registerPField.getPassword());
                     loginsObject.put(registerTField.getText().strip().toLowerCase(), password.strip().toLowerCase());
-                    try {writeToLogins(loginsObject.toJSONString());} catch (IOException e1){} catch (ParseException e1){}
+                    try {writeToLogins(loginsObject.toJSONString());} catch (IOException|ParseException e1){}
                 }
             }
         });
